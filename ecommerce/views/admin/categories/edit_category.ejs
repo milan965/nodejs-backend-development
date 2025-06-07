@@ -13,7 +13,7 @@
                                 <div id="pay-invoice">
                                     <div class="card-body">
                                         <div class="card-title">
-                                            <h3 class="text-center mb-3">Category Add</h3>
+                                            <h3 class="text-center mb-3">Category Edit</h3>
 
 
                                             <% if(locals.success != "") { %>
@@ -28,10 +28,11 @@
 
                                         </div>
                                         <hr>
-                                        <form method="post" action="/admin/category/addcategory">
+                                        <form method="post" action="/admin/category/updatecategory">
+                                            <input type="text"name="editid" value="<%= single.id %>">
                                             <div class="mb-3">
                                                 <label for="category" class="form-label">Category</label>
-                                                <input type="text" name="category" class="form-control" placeholder="Enter category" required>
+                                                <input type="text" name="category" value="<%= single.category %>" class="form-control" placeholder="Enter category" required>
                                             </div>
                                            
                                             <button type="submit" class="btn btn-primary">Submit</button>

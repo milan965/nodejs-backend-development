@@ -29,7 +29,65 @@ const addCategory = async(req,res) => {
         return false;
     }
 }
-
+const deleteCategory = async(req,res) => {
+    try{
+        const id = req.query.id
+        await Category.findByIdAndDelete(id);
+        req.flash('success', 'Category successfully delete');
+        return res.redirect('/admin/category');
+        
+    }catch(err){
+        console.log(err);
+        return false;
+    }
+}
+const editCategory = async(req,res) => {
+    try{
+        const id = req.query.id
+       let single = await Category.findById(id)
+         return res.render('admin/categories/edit_category',{
+            single
+        });
+    }catch(err){
+        console.log(err);
+        return false;
+    }
+}
+const updateCategory = async(req,res) => {
+    try{
+        const {editid,category} = req.body;
+        let up = await Category.findByIdAndUpdate(editid,{
+            category : category
+        })
+        req.flash('success','category successfully update');
+        return res.redirect('/admin/category')
+    }catch(err){
+        console.log(err);
+        return false;
+    }
+}
+const changeStatus = async(req,res)=> {
+    try{
+        const {id,status} = req.query;
+        if(status == "active"){
+            await Category.findByIdAndUpdate(id,{
+                status : "deactive"
+            })
+            req.flash('success','category successfully update');
+            return res.redirect('/admin/category')
+        }else{
+             await Category.findByIdAndUpdate(id,{
+                status : "active"
+            })
+            req.flash('success','category successfully update');
+            return res.redirect('/admin/category')
+        }
+        
+    }catch(err){
+        console.log(err);
+        return false;
+    }
+}
 module.exports = {
-    categoryPage,addCategoryPage,addCategory
+    categoryPage,addCategoryPage,addCategory,deleteCategory,editCategory,updateCategory,changeStatus
 }
